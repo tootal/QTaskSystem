@@ -5,12 +5,14 @@
 
 #include "tasksystemmodel.h"
 #include "task.h"
+#include "taskhighlighter.h"
 
 TaskManager::TaskManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TaskManager)
 {
     ui->setupUi(this);
+    highlighter = new TaskHighlighter(ui->taskEdit->document());
     connect(ui->taskSystemView, &QAbstractItemView::clicked,
             this, &TaskManager::setupTask);
 }
@@ -32,7 +34,7 @@ void TaskManager::setupTask(const QModelIndex &index)
     if (!file.open(QFile::ReadOnly)) {
         return ;
     }
-    ui->taskEdit->setText(file.readAll());
+    ui->taskEdit->setPlainText(file.readAll());
     ui->taskEdit->setFont(QFont("Consolas", 12));
     file.close();
 }

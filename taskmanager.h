@@ -8,6 +8,7 @@ class TaskManager;
 }
 
 class TaskSystemModel;
+class TaskHighlighter;
 
 class TaskManager : public QWidget
 {
@@ -21,6 +22,8 @@ public:
     
 private:
     Ui::TaskManager *ui;
+    
+    TaskHighlighter *highlighter;
     
     void setupTask(const QModelIndex &index);
 };

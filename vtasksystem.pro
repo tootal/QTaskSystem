@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp \
     task.cpp \
     taskfilemodel.cpp \
+    taskhighlighter.cpp \
     taskmanager.cpp \
     taskparser.cpp \
     tasksystemmodel.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     mainwindow.h \
     task.h \
     taskfilemodel.h \
+    taskhighlighter.h \
     taskmanager.h \
     taskparser.h \
     tasksystemmodel.h
