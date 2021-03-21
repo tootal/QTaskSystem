@@ -1,6 +1,11 @@
 #include "tasksystemmodel.h"
 
 #include <QDebug>
+#include <QDir>
+#include <QIcon>
+#include <QSvgRenderer>
+#include <QPixmap>
+#include <QPainter>
 
 #include "task.h"
 
@@ -77,6 +82,22 @@ Task *TaskSystemModel::taskFromIndex(const QModelIndex &index) const
     }
 }
 
+QIcon TaskSystemModel::iconFromIndex(const QModelIndex &index) const
+{
+    Task *task = taskFromIndex(index);
+    QDir dir(task->path);
+    if (!dir.exists(Task::ICON_NAME)) {
+        return QIcon();
+    }
+    QString path = dir.absoluteFilePath(Task::ICON_NAME);
+    QSvgRenderer renderer(path);
+    QPixmap pixmap(32, 32);
+    pixmap.fill(Qt::transparent);
+    QPainter painter(&pixmap);
+    renderer.render(&painter, pixmap.rect());
+    return QIcon(pixmap);
+}
+
 QVariant TaskSystemModel::data(const QModelIndex &index, int role) const
 {
     Task *task = taskFromIndex(index);
@@ -87,6 +108,14 @@ QVariant TaskSystemModel::data(const QModelIndex &index, int role) const
         case 0: return task->label;
         default:
             qWarning("data: invalid display value column %d", index.column());
+            break;
+        }
+        break;
+    case Qt::DecorationRole:
+        switch (index.column()) {
+        case 0: return iconFromIndex(index);
+        default:
+            qWarning("data: invalid decorate value column %d", index.column());
             break;
         }
         break;

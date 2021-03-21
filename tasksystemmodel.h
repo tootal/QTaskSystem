@@ -28,6 +28,8 @@ public:
 private:
     Task *taskFromIndex(const QModelIndex &index) const;
     
+    QIcon iconFromIndex(const QModelIndex &index) const;
+    
     Task *rootTask;
 };
 

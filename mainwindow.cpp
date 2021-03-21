@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::openTaskFolder);
     connect(ui->actionTaskManager, &QAction::triggered,
             this, &MainWindow::openTaskManager);
+    
+    setupText();
 }
 
 MainWindow::~MainWindow()
@@ -54,7 +56,7 @@ void MainWindow::openTaskFile()
 QString MainWindow::getTaskFolder()
 {
     auto path = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    path = path + "/tasks";
+    path = path + "/" + Task::DIR_NAME;
     QDir().mkpath(path);
     return path;
 }
@@ -74,4 +76,15 @@ void MainWindow::openTaskManager()
     manager->setWindowFlag(Qt::Window);
     manager->setTaskSystemModel(model);
     manager->show();
+}
+
+void MainWindow::setupText()
+{
+    ui->textEdit->setReadOnly(true);
+    QFile file(":/README.md");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return ;
+    }
+    ui->textEdit->setText(file.readAll());
+    ui->textEdit->setFont(QFont("Consolas", 18));
 }

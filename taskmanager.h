@@ -21,6 +21,8 @@ public:
     
 private:
     Ui::TaskManager *ui;
+    
+    void setupTask(const QModelIndex &index);
 };
 
 #endif // TASKMANAGER_H

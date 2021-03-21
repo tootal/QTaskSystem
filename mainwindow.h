@@ -28,6 +28,8 @@ private slots:
     
 private:
     
+    void setupText();
+    
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
