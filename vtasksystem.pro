@@ -10,13 +10,22 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    task.cpp \
+    taskfilemodel.cpp \
+    taskmanager.cpp \
+    tasksystemmodel.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    task.h \
+    taskfilemodel.h \
+    taskmanager.h \
+    tasksystemmodel.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    taskmanager.ui
 
 TRANSLATIONS += \
     vtasksystem_zh_CN.ts

@@ -17,12 +17,16 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_actionOpenUserTaskFolder_triggered();
     
-    void on_actionOpenDefaultTaskFolder_triggered();
+    void openTaskFile();
+    
+    QString getTaskFolder();
+    
+    void openTaskFolder();
+    
+    void openTaskManager();
     
 private:
-    void openTaskFolder(QStandardPaths::StandardLocation location);
     
     Ui::MainWindow *ui;
 };

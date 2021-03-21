@@ -32,11 +32,18 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionOpenUserTaskFolder"/>
-    <addaction name="actionOpenDefaultTaskFolder"/>
+    <addaction name="actionOpenTaskFolder"/>
+    <addaction name="actionTaskManager"/>
    </widget>
-   <addaction name="menu_Tasks"/>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpenTaskFile"/>
+   </widget>
+   <addaction name="menu_File"/>
    <addaction name="menu_Tools"/>
+   <addaction name="menu_Tasks"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpenDefaultTaskFolder">
@@ -44,9 +51,19 @@
     <string>Open &amp;Default Task Folder</string>
    </property>
   </action>
-  <action name="actionOpenUserTaskFolder">
+  <action name="actionOpenTaskFolder">
    <property name="text">
-    <string>Open &amp;User Task Folder</string>
+    <string>&amp;Open Task Folder</string>
+   </property>
+  </action>
+  <action name="actionTaskManager">
+   <property name="text">
+    <string>&amp;Task Manager</string>
+   </property>
+  </action>
+  <action name="actionOpenTaskFile">
+   <property name="text">
+    <string>&amp;Open Task File</string>
    </property>
   </action>
  </widget>
