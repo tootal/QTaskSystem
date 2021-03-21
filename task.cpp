@@ -6,17 +6,34 @@ const QString Task::DIR_NAME = "tasks";
 
 const QString Task::ICON_NAME = "icon.svg";
 
-Task::Task(QObject *parent) : QObject(parent)
+bool Task::tryDelete(Task *&task)
 {
+    if (task) {
+        delete task;
+        task = nullptr;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Task::Task(Task *parent) : parent(parent)
+{
+    if (parent) {
+        parent->children.append(this);
+    }
+}
+
+Task::~Task()
+{
+    for (int i = 0; i < children.count(); ++i) {
+        Task *currentChild = children.at(i);
+        children[i] = 0;
+        delete currentChild;
+    }
+    children.clear();
     
-}
-
-Task *Task::parent() const
-{
-    return qobject_cast<Task*>(QObject::parent());
-}
-
-Task *Task::child(int index) const
-{
-    return qobject_cast<Task*>(QObject::children().at(index));
+    tryDelete(windows);
+    tryDelete(linux);
+    tryDelete(osx);
 }

@@ -32,7 +32,7 @@ QModelIndex TaskSystemModel::index(int row, int column, const QModelIndex &paren
         return QModelIndex();
     
     Task *parentTask = taskFromIndex(parent);
-    Task *childTask = parentTask->child(row);
+    Task *childTask = parentTask->children.at(row);
     Q_ASSERT(childTask);
 
     return createIndex(row, column, childTask);
@@ -42,11 +42,11 @@ QModelIndex TaskSystemModel::parent(const QModelIndex &child) const
 {
     Task *childTask = taskFromIndex(child);
     if (!childTask) return QModelIndex();
-    Task *parentTask = childTask->parent();
+    Task *parentTask = childTask->parent;
     if (!parentTask) return QModelIndex();
-    Task *grandparentTask = parentTask->parent();
+    Task *grandparentTask = parentTask->parent;
     if (!grandparentTask) return QModelIndex();
-    int row = grandparentTask->children().indexOf(parentTask);
+    int row = grandparentTask->children.indexOf(parentTask);
     return createIndex(row, 0, parentTask);
 }
 
@@ -54,7 +54,7 @@ int TaskSystemModel::rowCount(const QModelIndex &parent) const
 {
     Task *parentTask = taskFromIndex(parent);
     if (!parentTask) return 0;
-    return parentTask->children().size();
+    return parentTask->children.size();
 }
 
 int TaskSystemModel::columnCount(const QModelIndex &) const

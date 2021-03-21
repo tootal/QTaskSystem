@@ -1,27 +1,98 @@
 #ifndef TASK_H
 #define TASK_H
 
-#include <QObject>
+#include <QList>
+#include <QMap>
 
-class Task : public QObject
+class Task;
+
+typedef QList<Task*> TaskList;
+
+class Task
 {
-    Q_OBJECT
 public:
+    class Locale {
+    public:
+        QString en_US;
+        QString zh_CN;
+        Locale(const QString &s = QString()) {
+            en_US = s;
+        }
+        operator QString() {
+            return en_US;
+        }
+    };
+    
+    class Options {
+    public:
+        QString cwd;
+        QMap<QString, Locale> env;
+    };
+    
+    class Input {
+    public:
+        QString id;
+        QString type;
+        Locale description;
+        QStringList options;
+    };
+    
+    class Button {
+    public:
+        Locale text;
+    };
+    
+    class Message {
+    public:
+        QString id;
+        QString type;
+        Locale title;
+        Locale text;
+        Locale detailedText;
+        QList<Button> buttons;
+    };
+
     static const QString JSON_NAME;
     
     static const QString ICON_NAME;
     
     static const QString DIR_NAME;
     
-    explicit Task(QObject *parent = nullptr);
+    static bool tryDelete(Task *&task);
     
-    Task *parent() const;
+    explicit Task(Task *parent = nullptr);
     
-    Task *child(int index) const;
-    
-    QString label;
+    ~Task();
     
     QString path;
+    
+    Task *parent;
+    
+    TaskList children;
+    
+    // ------------------- //
+    
+    QString version;
+    
+    Locale label;
+    
+    QString shortcut;
+    
+    QString command;
+    
+    QList<Locale> args;
+    
+    Options options;
+    
+    QList<Input> inputs;
+    
+    QList<Message> messages;
+    
+    Task *windows;
+    
+    Task *osx;
+    
+    Task *linux;
 };
 
 #endif // TASK_H
