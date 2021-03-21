@@ -5,13 +5,12 @@ Task::Task(QObject *parent) : QObject(parent)
     
 }
 
-Task::Task(const QString &label, QObject *parent)
-    : QObject(parent), m_label(label)
+Task *Task::parent() const
 {
-    
+    return qobject_cast<Task*>(QObject::parent());
 }
 
-QString Task::label() const
+Task *Task::child(int index) const
 {
-    return m_label;
+    return qobject_cast<Task*>(QObject::children().at(index));
 }

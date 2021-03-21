@@ -18,6 +18,4 @@ TaskManager::~TaskManager()
 void TaskManager::setTaskSystemModel(TaskSystemModel *model)
 {
     ui->taskSystemView->setModel(model);
-    auto index = model->index(model->rootPath());
-    ui->taskSystemView->setRootIndex(index);
 }

@@ -14,6 +14,7 @@ SOURCES += \
     task.cpp \
     taskfilemodel.cpp \
     taskmanager.cpp \
+    taskparser.cpp \
     tasksystemmodel.cpp
 
 HEADERS += \
@@ -21,6 +22,7 @@ HEADERS += \
     task.h \
     taskfilemodel.h \
     taskmanager.h \
+    taskparser.h \
     tasksystemmodel.h
 
 FORMS += \

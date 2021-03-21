@@ -9,9 +9,11 @@
 #include <QTreeView>
 #include <QFileDialog>
 
+#include "taskparser.h"
 #include "tasksystemmodel.h"
 #include "taskfilemodel.h"
 #include "taskmanager.h"
+#include "task.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -64,9 +66,9 @@ void MainWindow::openTaskFolder()
 
 void MainWindow::openTaskManager()
 {
+    Task *task = TaskParser::parse(getTaskFolder());
     auto model = new TaskSystemModel(this);
-    auto path = getTaskFolder();
-    model->setRootPath(path);
+    model->setRootTask(task);
     
     auto manager = new TaskManager(this);
     manager->setWindowFlag(Qt::Window);

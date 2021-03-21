@@ -9,12 +9,11 @@ class Task : public QObject
 public:
     explicit Task(QObject *parent = nullptr);
     
-    Task(const QString &label, QObject *parent = nullptr);
+    Task *parent() const;
     
-    QString label() const;
-
-private:
-    QString m_label;
+    Task *child(int index) const;
+    
+    QString label;
 };
 
 #endif // TASK_H
