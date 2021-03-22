@@ -60,7 +60,13 @@ public:
     
     static bool tryDelete(Task *&task);
     
-    explicit Task(Task *parent = nullptr);
+    enum Kind {
+        Node,
+        Windows,
+        Linux,
+        Osx
+    };
+    Task(Task *parent = nullptr, Kind kind = Node);
     
     ~Task();
     
@@ -69,6 +75,8 @@ public:
     Task *parent;
     
     TaskList children;
+    
+    Kind kind;
     
     // ------------------- //
     

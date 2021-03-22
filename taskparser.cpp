@@ -7,10 +7,21 @@
 
 Task *TaskParser::parse(const QString &path, Task *parent)
 {
-    Task *task = new Task(parent);
+    Task *task = nullptr;
     QDir dir(path);
-    task->path = path;
-    task->label = dir.dirName();
+    if (dir.exists(Task::JSON_NAME)) {
+        Options options;
+        options.parent = parent;
+        options.path = path;
+        QFile file(dir.absoluteFilePath(Task::JSON_NAME));
+        if (file.open(QFile::ReadOnly)) {
+            task = parseJson(QJsonDocument::fromJson(file.readAll()), options);
+            file.close();
+        }
+    }
+    if (task == nullptr) {
+        task = new Task(parent);
+    }
     const QFileInfoList entryList = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot);
     for (auto &entry : entryList) {
         QDir child(entry.absoluteFilePath());
@@ -19,4 +30,10 @@ Task *TaskParser::parse(const QString &path, Task *parent)
         }
     }
     return task;
+}
+
+Task *TaskParser::parseJson(const QJsonDocument &json, const TaskParser::Options &options)
+{
+    if (!json.isObject()) return nullptr;
+    
 }

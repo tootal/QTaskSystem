@@ -1,0 +1,110 @@
+{
+    "definitions": {
+        "locale": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "en_US": {
+                            "type": "string"
+                        },
+                        "zh_CN": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "options": {
+            "type": "object",
+            "description": "Additional command options",
+            "properties": {
+                "cwd": {
+                    "type": "string",
+                    "description": "The current working directory of the executed program or script. If omitted Code's current workspace root is used."
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The environment of the executed program or shell. If omitted the parent process' environment is used."
+                }
+            },
+            "additionalProperties": {
+                "type": ["string", "array", "object"]
+            }
+        },
+        "shellConfiguration": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Configures the shell to be used.",
+            "properties": {
+                "executable": {
+                    "type": "string",
+                    "description": "The shell to be used."
+                },
+                "args": {
+                    "type": "array",
+                    "description": "The shell arguments.",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "commandConfiguration": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "command": {
+                    "type": "string",
+                    "description": "The command to be executed. Can be an external program or a shell command."
+                },
+                "args": {
+                    "type": "array",
+                    "description": "Arguments passed to the command when this task is invoked.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "options": {
+                    "$ref": "#/definitions/options"
+                }
+            }
+        },
+        "taskDescription": {
+            "type": "object",
+            "required": ["label"],
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "$ref": "#/definitions/commandConfiguration"
+                },
+                {
+                    "label": {
+                        "type": "string"
+                    },
+                    "windows": {
+                        "$ref": "#/definitions/commandConfiguration",
+                        "description": {
+                            "en_US": "Windows specific command configuration",
+                            "zh_CN": "Windows 平台特定设置"
+                        }
+                    },
+                    "osx": {
+                        "$ref": "#/definitions/commandConfiguration",
+                        "description": "Mac specific command configuration"
+                    },
+                    "linux": {
+                        "$ref": "#/definitions/commandConfiguration",
+                        "description": "Linux specific command configuration"
+                    }
+                }
+            ]
+        }
+    }
+}

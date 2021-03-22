@@ -19,6 +19,7 @@ SOURCES += \
     tasksystemmodel.cpp
 
 HEADERS += \
+    abstracttask.h \
     mainwindow.h \
     task.h \
     taskfilemodel.h \

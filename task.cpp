@@ -17,10 +17,28 @@ bool Task::tryDelete(Task *&task)
     }
 }
 
-Task::Task(Task *parent) : parent(parent)
+Task::Task(Task *parent, Task::Kind kind)
+    : parent(parent), kind(kind)
 {
-    if (parent) {
+    if (!parent) return ;
+    switch (kind) {
+    case Node:
         parent->children.append(this);
+        break;
+    case Windows:
+        tryDelete(parent->windows);
+        parent->windows = this;
+        break;
+    case Linux:
+        tryDelete(parent->linux);
+        parent->linux = this;
+        break;
+    case Osx:
+        tryDelete(parent->osx);
+        parent->osx = this;
+        break;
+    default:
+        break;
     }
 }
 
